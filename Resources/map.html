@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>Google Maps JavaScript API v3 Example: Polygon Simple</title>
+		<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+		<script type="text/javascript">
+			var map;
+			var googleMarkerObjs = [];
+			var currentInfoWindow = null;
+			//最後に開いた情報ウィンドウを記憶
+
+			// Google Mapのスタイル
+			var styles = [{
+				stylers : [{
+					hue : "#00ffe6"
+				}, {
+					saturation : -20
+				}]
+			}, {
+				featureType : "road",
+				elementType : "geometry",
+				stylers : [{
+					lightness : 100
+				}, {
+					visibility : "simplified"
+				}]
+			}, {
+				featureType : "road",
+				elementType : "labels",
+				stylers : [{
+					visibility : "off"
+				}]
+			}];
+
+			function initialize(obj) {
+				var myLatlng = new google.maps.LatLng(obj['latitude'], obj['longitude']);
+
+				var mapOptions = {
+					'zoom' : 14,
+					'center' : myLatlng,
+					'mapTypeId' : google.maps.MapTypeId.ROADMAP
+				}
+				map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				map.setOptions({
+					'styles' : styles
+				});
+			}
+
+			// 座標オブジェクトを受け取る
+			function setMarkerOne(data, boxTextId) {
+				//alert(obj['latitude'] + ':' + obj['longitude']);
+				latlng = new google.maps.LatLng(data['latitude'], data['longitude']);
+
+				var icon = new google.maps.MarkerImage(data['icon'], new google.maps.Size(35, 56), new google.maps.Point(0, 0), new google.maps.Point(38, 56));
+
+				var contentStr = '<style>' +
+								'#venueName {font-size : 17px;} #bodyContent {font-size : 15px;} #scanedResult{font-size : 15px; color : #576996; text-decoration : underline;}</style>' +
+								'<div id="content"><div id ="venueName">' +
+								data['title'] + '</div><div id="bodyContent">' +
+								data['subtitle'] + '</div><div id="scanedResult">' +
+								data['scaned_result'] + '</div>';
+
+				var infoWndOpts = {
+					'maxWidth' : 100,
+					//'content' : contentStr,
+				};
+				var infoWnd = new google.maps.InfoWindow(infoWndOpts);
+
+				var markerOpts = {
+					'position' : latlng,
+					'map' : map,
+					'icon' : icon
+				};
+				var marker = new google.maps.Marker(markerOpts);
+				google.maps.event.addListener(marker, "click", function() {
+					//先に開いた情報ウィンドウがあれば、closeする
+					if (currentInfoWindow) {
+						currentInfoWindow.close();
+					}
+					//情報ウィンドウを開く
+					infoWnd.open(map, marker);
+					currentInfoWindow = infoWnd;
+				});
+
+            	var boxText = document.createElement("font");
+            	boxText.id = boxTextId;
+            	boxText.innerHTML = contentStr;
+
+            	infoWnd.setContent(boxText);
+
+            	// 情報ウィンドウのコンテキストをクリックしたときの振る舞い
+            	google.maps.event.addDomListener(boxText, 'click', function(){
+            		//alert('hoge');
+            		Titanium.App.fireEvent('onWebView', {message : data['scaned_result']});
+            		//Ti.Platform.openURL('http://www.google.co.jp/');
+            	});
+			}
+		</script>
+
+	</head>
+	<body>
+		<div id="map_canvas"></div>
+	</body>
+</html>

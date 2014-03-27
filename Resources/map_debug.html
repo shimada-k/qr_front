@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&hl=ja"></script>
+<script type="text/javascript">
+
+	var currentInfoWindow = null;	//最後に開いた情報ウィンドウを記憶
+	function initialize() {
+		//地図初期化
+		var initPos = new google.maps.LatLng(35.127152, 138.840627);
+		var myOptions = {
+			center : initPos,
+			zoom : 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+		var map_canvas = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		
+		var pos_array = [{'lat' : 35.127152,
+							'lng' : 138.860627},
+						{'lat' : 35.127152,
+							'lng' : 138.810627}]
+		
+		//マーカー1,2を作成
+		for(var i = 0; i < 2; i++){
+			var markerPos1 = new google.maps.LatLng(pos_array[i].lat, pos_array[i].lng);
+			createMarker(map_canvas, markerPos1, '<b>マーカー' + i + '</b>');
+		}
+	}
+	function createMarker(map, latlng, text) {
+		var infoWndOpts = {
+			content : text,
+		};
+		var infoWnd = new google.maps.InfoWindow(infoWndOpts);
+		
+		var markerOpts = {
+			position : latlng,
+			map : map
+		};
+		var marker = new google.maps.Marker(markerOpts);
+		google.maps.event.addListener(marker, "click", function(){
+			//先に開いた情報ウィンドウがあれば、closeする
+			if (currentInfoWindow) {
+				currentInfoWindow.close();
+			}
+			//情報ウィンドウを開く
+			infoWnd.open(map, marker);
+			
+			currentInfoWindow = infoWnd;
+		});
+		return marker;
+	}
+	window.onload = initialize;
+</script>
+</head>
+<body >
+  <div id="map_canvas" style="width:100%; height:500px"></div>
+</body>
+</html>

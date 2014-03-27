@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+	
+    <property name="acs-oauth-secret-production" type="string">aLI1zDBi6Do26c1mfl8LonMAshh8H8O1</property>
+    <property name="acs-oauth-key-production" type="string">hEFe8V4cpBsAqCLrMo82comOqeDpSKIb</property>
+    <property name="acs-api-key-production" type="string">SjC44JKbybWPPznjVPUpDwnug0rYlLml</property>
+    <property name="acs-oauth-secret-development" type="string">IzNejmiwNcfN9yTq9eGbuIp0uOAjDgxe</property>
+    <property name="acs-oauth-key-development" type="string">N7WetlYgc9YiS9OBu4CEfb98rNBinohZ</property>
+    <property name="acs-api-key-development" type="string">MpHNPWgCNZm3P2PNDG7ekPW2xBuf5n1H</property>
+
+    <deployment-targets>
+        <target device="mobileweb">true</target>
+        <target device="iphone">false</target>
+        <target device="ipad">false</target>
+        <target device="android">true</target>
+        <target device="blackberry">false</target>
+    </deployment-targets>
+    <sdk-version>3.0.0.GA</sdk-version>
+    <id>qrcode.of.the.dead</id>
+    <name>QR CODE OF THE DEAD</name>
+    <version>2.1.0.1</version>
+    <publisher>shimada-k</publisher>
+    <url>http://</url>
+    <description>not specified</description>
+    <copyright>2012 by shimada-k</copyright>
+    <icon>appicon.png</icon>
+    <persistent-wifi>false</persistent-wifi>
+    <prerendered-icon>false</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>true</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>0ef25c92-4698-4e96-a82a-126ba82d0901</guid>
+    <property name="ti.ui.defaultunit">system</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+    	<manifest android:versionCode="13" android:versionName="1.1.0"/>
+    </android>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs" version="2.3.0">ti.cloud</module>
+        <module platform="android" version="1.0.0">com.mirasense.scanditsdk</module>
+    </modules>
+</ti:app>
